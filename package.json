@@ -1,0 +1,31 @@
+{
+  "name": "fb-oauth-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "ava"
+  },
+  "author": "gary ryan",
+  "license": "ISC",
+  "ava": {
+    "concurrency": 5,
+    "verbose": true,
+    "failFast": true,
+    "source": [
+      "bin/**/*.test.{js,jsx}"
+    ]
+  },
+  "dependencies": {
+    "koa": "^2.0.1",
+    "koa-router": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.5",
+    "ava": "^0.18.2",
+    "fetch": "^1.1.0",
+    "node-fetch": "^1.6.3",
+    "typescript": "^2.2.1"
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "types": ["node"],
+        "alwaysStrict": true,
+        "noEmitHelpers": true,
+        "allowSyntheticDefaultImports": true,
+        "module": "commonjs",
+        "target": "es2017",
+        "noImplicitAny": false,
+        "sourceMap": false,
+        "rootDir": "./",
+        "outDir": "./bin"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
