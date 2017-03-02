@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "private": true,
+  "engines": {
+    "node": "7.6.0"
+  },
   "scripts": {
     "start": "./node_modules/.bin/tsc src/index.ts && node bin/src/index.js",
     "start:dev": "node -r dotenv/config bin/src/index.js dotenv_config_path=env/vars/.env.dev",
