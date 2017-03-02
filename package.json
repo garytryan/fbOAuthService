@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "node bin/src/index.js",
+    "start": "./node_modules/.bin/tsc src/index.ts && node bin/src/index.js",
     "start:dev": "node -r dotenv/config bin/src/index.js dotenv_config_path=env/vars/.env.dev",
     "test": "ava"
   },
@@ -19,8 +20,6 @@
     ]
   },
   "dependencies": {
-    "@purest/providers": "^1.0.0",
-    "dotenv": "^4.0.0",
     "fb": "^1.1.1",
     "grant-koa": "^3.7.0",
     "koa": "^2.0.1",
@@ -31,14 +30,14 @@
     "koa-router": "^7.0.1",
     "koa-session": "^4.0.0",
     "koa-validate": "^1.0.7",
-    "purest": "^3.0.1",
     "request": "^2.79.0",
-    "request-promise-native": "^1.0.3"
+    "request-promise-native": "^1.0.3",
+    "typescript": "^2.2.1"
   },
   "devDependencies": {
+    "dotenv": "^4.0.0",
     "@types/node": "^7.0.5",
     "ava": "^0.18.2",
-    "fetch": "^1.1.0",
-    "typescript": "^2.2.1"
+    "fetch": "^1.1.0"
   }
 }
