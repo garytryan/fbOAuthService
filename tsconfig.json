@@ -9,8 +9,16 @@
         "target": "es2017",
         "noImplicitAny": false,
         "sourceMap": false,
-        "rootDir": "./",
-        "outDir": "./bin"
+        "rootDirs": ["./", "src/"],
+        "outDir": "./bin",
+        "baseUrl": ".",
+        "paths": {
+          "*": [
+              "src/*",
+              "*",
+              "node_modules/*"
+          ]
+        }
     },
     "exclude": [
         "node_modules"

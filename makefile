@@ -21,4 +21,4 @@ test-watch:
 	${ava} --watch
 
 dev:
-	${node} 'index.ts'
+	${node} './bin/src/index.js'

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node bin/src/index.js",
+    "start:dev": "node -r dotenv/config bin/src/index.js dotenv_config_path=env/vars/.env.dev",
     "test": "ava"
   },
   "author": "gary ryan",
@@ -18,14 +19,26 @@
     ]
   },
   "dependencies": {
+    "@purest/providers": "^1.0.0",
+    "dotenv": "^4.0.0",
+    "fb": "^1.1.1",
+    "grant-koa": "^3.7.0",
     "koa": "^2.0.1",
-    "koa-router": "^7.0.1"
+    "koa-accesslog": "0.0.2",
+    "koa-bodyparser": "^3.2.0",
+    "koa-cors": "0.0.16",
+    "koa-mount": "^2.0.0",
+    "koa-router": "^7.0.1",
+    "koa-session": "^4.0.0",
+    "koa-validate": "^1.0.7",
+    "purest": "^3.0.1",
+    "request": "^2.79.0",
+    "request-promise-native": "^1.0.3"
   },
   "devDependencies": {
     "@types/node": "^7.0.5",
     "ava": "^0.18.2",
     "fetch": "^1.1.0",
-    "node-fetch": "^1.6.3",
     "typescript": "^2.2.1"
   }
 }

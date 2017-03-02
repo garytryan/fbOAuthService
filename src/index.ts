@@ -1,18 +1,36 @@
 const Koa = require('koa')
 const Router = require('koa-router')
+const mount = require('koa-mount')
+const bodyParser = require('koa-bodyparser')
+const session = require('koa-session')
+const accesslog = require('koa-accesslog')
+const grantConfig = require('./config/grant.config')
+const routes = require('./routes')
+const cors = require('koa-cors')
+const validate = require('koa-validate')
+import errorHandler from'./utils/errorHandler/index'
 
 const app = new Koa()
-const router = new Router()
+let router = new Router()
+const Grant = require('grant-koa')
+const grant = new Grant(grantConfig)
 
-const pause = count => new Promise(resolve => { setTimeout(resolve, count) })
+validate(app)
+routes.configRoutes(router)
 
-router.get('/', async ctx => {
-  await pause(2000)
-  ctx.body = 'hello'
-})
+
+app.keys = ['grant']
 
 app
+  .use(errorHandler(app))
+  .use(cors())
+  .use(session(app))
+  .use(bodyParser())
+  .use(accesslog())
+  .use(mount(grant))
   .use(router.routes())
   .use(router.allowedMethods())
 
-app.listen(3000, () => console.log('listening on port 3000'))
+app.on('error', (error, ctx) => console.log(error.message, error.errors))
+
+app.listen(3001, () => console.log('listening on port 3001'))
