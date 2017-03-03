@@ -1,3 +1,5 @@
+const PORT = process.env.PORT
+
 const Koa = require('koa')
 const Router = require('koa-router')
 const mount = require('koa-mount')
@@ -33,4 +35,4 @@ app
 
 app.on('error', (error, ctx) => console.log(error.message, error.errors))
 
-app.listen(3001, () => console.log('listening on port 3001'))
+app.listen(PORT, () => console.log(`listening on port ${PORT}`))
