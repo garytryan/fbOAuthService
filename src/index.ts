@@ -10,6 +10,7 @@ const grantConfig = require('./config/grant.config')
 const routes = require('./routes')
 const cors = require('koa-cors')
 const validate = require('koa-validate')
+const mongoose = require('mongoose')
 import errorHandler from'./utils/errorHandler/index'
 
 const app = new Koa()
@@ -35,4 +36,15 @@ app
 
 app.on('error', (error, ctx) => console.log(error.message, error.errors))
 
-app.listen(PORT, () => console.log(`listening on port ${PORT}`))
+const start = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB)
+    console.log('connect to mongodb')
+
+    app.listen(PORT, () => console.log(`listening on port ${PORT}`))
+  } catch (error) {
+    console.log('failed to connect to start', error)
+  }
+}
+
+start()

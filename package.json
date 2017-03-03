@@ -25,6 +25,7 @@
     ]
   },
   "dependencies": {
+    "@types/node": "^7.0.5",
     "fb": "^1.1.1",
     "grant-koa": "^3.7.0",
     "koa": "^2.0.1",
@@ -35,9 +36,10 @@
     "koa-router": "^7.0.1",
     "koa-session": "^4.0.0",
     "koa-validate": "^1.0.7",
+    "mongodb": "^2.2.24",
+    "mongoose": "^4.8.5",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3",
-    "@types/node": "^7.0.5",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
