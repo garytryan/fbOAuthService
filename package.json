@@ -9,7 +9,7 @@
     "npm": "4.3.0"
   },
   "scripts": {
-    "start": "node ./bin/src/index.js",
+    "start": "node ./bin/index.js",
     "start:dev": "node -r dotenv/config bin/src/index.js dotenv_config_path=env/vars/.env.dev",
     "test": "ava",
     "postinstall": "./node_modules/typescript/bin/tsc -p tsconfig.prod.json"
