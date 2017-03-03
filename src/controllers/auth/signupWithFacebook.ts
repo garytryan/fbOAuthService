@@ -1,5 +1,8 @@
 import facebook from '../../utils/facebook'
 import facebookConfig from '../../config/facebook.config'
+import User from '../../models/User'
+import FacebookAccount from '../../models/FacebookAccount'
+
 
 export default async ctx => {
   ctx.checkBody('facebookUserAccessToken').notBlank()
@@ -34,8 +37,22 @@ export default async ctx => {
   ) ctx.throw(401, 'access token invalid for user')
 
 
-  const userProfile = await facebook
+  const userProfile:any = await facebook
     .api(ctx.request.body.facebookUserId, {
       fields: 'id,name,picture,email'
     })
+
+
+  const user = await User({
+    name: userProfile.name,
+    email: userProfile.email,
+    profileImageURL: userProfile.picture.data.is_silhouette ? '' : userProfile.picture.data.url
+  }).save()
+
+  await FacebookAccount({
+    userId: user.id,
+    facebookUserId: userProfile.id
+  }).save()
+
+  ctx.body = user
 }

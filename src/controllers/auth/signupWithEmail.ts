@@ -1,3 +1,5 @@
+import User from '../../models/User'
+
 export default async ctx => {
   ctx.checkBody('email').isEmail()
   ctx.checkBody('name').notBlank()
@@ -12,12 +14,8 @@ export default async ctx => {
     return
   }
 
-  ctx.body = {
-    name: 'name',
-    email: 'email@email.email',
-    profileImage: {
-      isEmpty: true,
-      url: ''
-    }
-  }
+  ctx.body = await User({
+    name: ctx.request.body.name,
+    email: ctx.request.body.email,
+  }).save()
 }

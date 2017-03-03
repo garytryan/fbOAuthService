@@ -77,12 +77,7 @@ async t => {
     t.fail(error.message)
   }
 
-  t.deepEqual(response, {
-    name: 'name',
-    email: 'email@email.email',
-    profileImage: {
-      isEmpty: true,
-      url: ''
-    }
-  })
+  t.is(response.name, 'name')
+  t.is(response.email, 'email@email.email')
+  t.is(response.profileImageURL, '')
 })
