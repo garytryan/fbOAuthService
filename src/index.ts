@@ -34,7 +34,7 @@ app
   .use(router.routes())
   .use(router.allowedMethods())
 
-app.on('error', (error, ctx) => console.log(error.message, error.errors))
+app.on('error', (error, ctx) => console.log(error.message, error.stack, error.errors))
 
 const start = async () => {
   try {

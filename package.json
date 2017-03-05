@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@types/node": "^7.0.5",
+    "babel-polyfill": "^6.23.0",
     "fb": "^1.1.1",
     "grant-koa": "^3.7.0",
     "koa": "^2.0.1",
@@ -43,7 +44,8 @@
     "typescript": "^2.2.1"
   },
   "devDependencies": {
-    "dotenv": "^4.0.0",
-    "ava": "^0.18.2"
+    "ava": "^0.18.2",
+    "babel-preset-stage-0": "^6.22.0",
+    "dotenv": "^4.0.0"
   }
 }

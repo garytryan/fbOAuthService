@@ -25,7 +25,7 @@ export default async ctx => {
 
   facebook.setAccessToken(accessTokenResponse.access_token)
 
-  const userAccessTokenInspectionResponse: any = await facebook
+  const userAccessTokenInspectionResponse:any = await facebook
     .api('/debug_token',{
       input_token: ctx.request.body.facebookUserAccessToken,
       access_token: accessTokenResponse.access_token
