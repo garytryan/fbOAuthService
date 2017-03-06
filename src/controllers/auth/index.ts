@@ -1,5 +1,6 @@
 import signupWithEmail from './signupWithEmail'
 import signupWithFacebook from './signupWithFacebook'
+import { logout as logoutFromZine } from '../../utils/identity'
 
 export default {
   signup: async ctx => {
@@ -20,5 +21,10 @@ export default {
     else if (ctx.request.body.vendor === 'facebook') {
       await signupWithFacebook(ctx)
     }
+  },
+
+  logout: async ctx => {
+    logoutFromZine(ctx)
+    ctx.status = 200
   }
 }

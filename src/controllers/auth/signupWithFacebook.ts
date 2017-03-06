@@ -42,12 +42,17 @@ export default async ctx => {
       fields: 'id,name,picture,email'
     })
 
+  let user;
 
-  const user = await User({
-    name: userProfile.name,
-    email: userProfile.email,
-    profileImageURL: userProfile.picture.data.is_silhouette ? '' : userProfile.picture.data.url
-  }).save()
+  user = await User.findOneAndUpdate(
+    { _id: ctx.user._id },
+    {
+      name: userProfile.name,
+      email: userProfile.email,
+      profileImageURL: userProfile.picture.data.is_silhouette ? '' : userProfile.picture.data.url
+    },
+    { new:true }
+  )
 
   await FacebookAccount({
     userId: user.id,
