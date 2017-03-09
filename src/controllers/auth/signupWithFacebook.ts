@@ -34,7 +34,7 @@ export default async ctx => {
   if(
     userAccessTokenInspectionResponse.data.user_id !==
     ctx.request.body.facebookUserId
-  ) ctx.throw(401, 'access token invalid for user')
+  ) return ctx.throw(401, 'access token invalid for user')
 
 
   const userProfile:any = await facebook
@@ -42,9 +42,7 @@ export default async ctx => {
       fields: 'id,name,picture,email'
     })
 
-  let user;
-
-  user = await User.findOneAndUpdate(
+  const user = await User.findOneAndUpdate(
     { _id: ctx.user._id },
     {
       name: userProfile.name,
