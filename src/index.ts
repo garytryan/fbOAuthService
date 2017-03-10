@@ -25,11 +25,13 @@ const start = async () => {
   }
 
 
+  console.log(process.env.MONGODB_USERNAME,process.env.MONGODB_PASSWORD)
+
   const app = new Koa()
   let router = new Router()
   const sessionStore = new  MongoStore({
-    username: 'admin',
-    password: 'c00lb3ans',
+    username: process.env.MONGODB_USERNAME,
+    password: process.env.MONGODB_PASSWORD,
     db: 'zine'
   })
 
@@ -37,7 +39,7 @@ const start = async () => {
   routes.configRoutes(router)
 
 
-  app.keys = ['coolbeans']
+  app.keys = [process.env.KEYS]
 
   app
     .use(errorHandler(app))

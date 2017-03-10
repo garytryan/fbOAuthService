@@ -8,7 +8,11 @@ export const me = async ctx => {
  ctx.body = ctx.user
 }
 
-export default {
-  get,
-  me
+export const post = async ctx => {
+  if(!ctx.user.name) return ctx.throw(401, 'unauthorized')
+
+  ctx.body = await User.findOneAndUpdate(
+    { _id: ctx.user._id },
+    ctx.request.body,
+    { new: true })
 }
