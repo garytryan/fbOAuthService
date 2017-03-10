@@ -4,8 +4,8 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const mount = require('koa-mount')
 const bodyParser = require('koa-bodyparser')
-const session = require('koa-session')
-const MongoStore = require('koa-generic-session-mongo')
+const session = require('koa-session-store')
+const MongooseStore = require('koa-session-mongoose')
 const accesslog = require('koa-accesslog')
 const routes = require('./routes')
 const cors = require('koa-cors')
@@ -19,21 +19,16 @@ const convert = require('koa-convert')
 const start = async () => {
   try {
     mongoose.Promise = Promise
-    await mongoose.connect(process.env.MONGODB)
+    await mongoose.connect(process.env.MONGODB, { promiseLibrary: Promise })
   } catch (error) {
     console.log('failed to connect to mongoose')
   }
 
 
-  console.log(process.env.MONGODB_USERNAME,process.env.MONGODB_PASSWORD)
-
   const app = new Koa()
   let router = new Router()
-  const sessionStore = new  MongoStore({
-    username: process.env.MONGODB_USERNAME,
-    password: process.env.MONGODB_PASSWORD,
-    db: 'zine'
-  })
+
+  const MongooseStore = require('koa-session-mongoose')
 
   validate(app)
   routes.configRoutes(router)
@@ -44,7 +39,13 @@ const start = async () => {
   app
     .use(errorHandler(app))
     .use(cors({ credentials: true }))
-    .use(convert(session(app)))
+    .use(convert(session({
+      name: 'zine',
+      store: new MongooseStore({
+        collectons: 'sessions',
+        model: 'Session'
+      })
+    })))
     .use(bodyParser())
     .use(accesslog())
     .use(identity())

@@ -1,6 +1,7 @@
 import User from '../../models/User'
 
 export default () => async (ctx, next) => {
+  console.log('indentity',ctx.session.userId)
   if(ctx.session.userId) {
     ctx.user = await User.findById(ctx.session.userId)
   }
