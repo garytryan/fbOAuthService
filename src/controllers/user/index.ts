@@ -5,14 +5,14 @@ export const get = async ctx => {
 }
 
 export const me = async ctx => {
- ctx.body = ctx.user
+ ctx.body = ctx.loggedInUser
 }
 
 export const post = async ctx => {
-  if(!ctx.user.name) return ctx.throw(401, 'unauthorized')
+  if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
 
   ctx.body = await User.findOneAndUpdate(
-    { _id: ctx.user._id },
+    { _id: ctx.loggedInUser._id },
     ctx.request.body,
     { new: true })
 }

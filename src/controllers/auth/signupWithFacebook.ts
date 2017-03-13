@@ -2,6 +2,7 @@ import facebook from '../../utils/facebook'
 import facebookConfig from '../../config/facebook.config'
 import User from '../../models/User'
 import FacebookAccount from '../../models/FacebookAccount'
+import { login } from '../../utils/identity'
 
 
 export default async ctx => {
@@ -15,6 +16,22 @@ export default async ctx => {
       { errors: ctx.errors }
     )
     return
+  }
+
+  if(ctx.session.loggedInUserId) {
+    return ctx.body = ctx.loggedInUser
+  }
+
+  const existingFacebookAccount = await FacebookAccount.findOne({
+    facebookUserId: ctx.request.body.facebookUserId
+  })
+
+  if(existingFacebookAccount) {
+    const existingUser = await User.findById(existingFacebookAccount.userId)
+
+    login(ctx, existingUser)
+
+    return ctx.body = ctx.loggedInUser
   }
 
   const accessTokenResponse: any = await facebook.api('oauth/access_token', {
@@ -42,20 +59,18 @@ export default async ctx => {
       fields: 'id,name,picture,email'
     })
 
-  const user = await User.findOneAndUpdate(
-    { _id: ctx.user._id },
-    {
-      name: userProfile.name,
-      email: userProfile.email,
-      profileImageURL: userProfile.picture.data.is_silhouette ? '' : userProfile.picture.data.url
-    },
-    { new:true }
-  )
+  const user = await User({
+    name: userProfile.name,
+    email: userProfile.email,
+    profileImageURL: userProfile.picture.data.is_silhouette ? '' : userProfile.picture.data.url
+  }).save()
 
   await FacebookAccount({
     userId: user.id,
     facebookUserId: userProfile.id
   }).save()
 
-  ctx.body = user
+  login(ctx, user)
+
+  ctx.body = ctx.loggedInUser
 }
