@@ -17,6 +17,12 @@ export const post = async ctx => {
     ctx.throw(403, 'a zine by this name already exists')
   }
 
+  const userZineCount = await Zine.count({ ownerId: ctx.loggedInUser._id })
+
+  if(userZineCount > 10) {
+    ctx.throw(403, 'cannot own more then 10 zines')
+  }
+
 
   ctx.body = await Zine.findOneAndUpdate(
     { name: ctx.request.body.name, ownerId: ctx.loggedInUser._id },
@@ -24,6 +30,10 @@ export const post = async ctx => {
     { new: true, upsert: true })
 }
 
-export const get = async ctx => {
+export const getZine = async ctx => {
   ctx.body = await Zine.findOne(ctx.query)
+}
+
+export const getZines = async ctx => {
+  ctx.body = await Zine.find(ctx.query)
 }
