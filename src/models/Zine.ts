@@ -7,7 +7,9 @@ const ZineSchema = new mongoose.Schema({
   description: { type: String, default: ''},
   categories: { type: String, default: '' },
   iconImageURL: { type: String, default: '' },
-  published: { type: Boolean, default: false }
+  headerImageURL: { type: String, default: '' },
+  published: { type: Boolean, default: false },
+  deleted: { type: Boolean, default: false }
 })
 
 ZineSchema.methods.toJSON = function() {

@@ -9,6 +9,7 @@ export const configRoutes = router =>
     .get('/user', user.get)
     .post('/user', user.post)
     .post('/zine', zine.post)
+    .del('/zine', zine.del)
     .get('/zine', zine.getZine)
     .get('/zines', zine.getZines)
     .get('/my/user', user.me)
