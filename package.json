@@ -40,6 +40,7 @@
     "koa-session-mongoose": "^1.0.0",
     "koa-session-store": "^2.0.0",
     "koa-validate": "^1.0.7",
+    "lodash": "^4.17.4",
     "mongodb": "^2.2.24",
     "mongoose": "^4.8.5",
     "request": "^2.79.0",

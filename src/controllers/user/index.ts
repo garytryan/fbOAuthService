@@ -5,7 +5,7 @@ export const get = async ctx => {
 }
 
 export const me = async ctx => {
- ctx.body = ctx.loggedInUser
+ ctx.body = ctx.loggedInUser || ctx.loggedOutUser
 }
 
 export const post = async ctx => {
