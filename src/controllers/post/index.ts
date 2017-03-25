@@ -2,7 +2,6 @@ import * as mongoose from 'mongoose'
 import Post from '../../models/Post'
 import User from '../../models/User'
 import Zine from '../../models/Zine'
-import Content from '../../models/Content'
 import { pick } from 'lodash'
 
 export const post = async ctx => {
