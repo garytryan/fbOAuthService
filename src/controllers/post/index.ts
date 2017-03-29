@@ -37,23 +37,5 @@ export const get = async ctx => {
     return
   }
 
-  const posts = await Post.find(ctx.query)
-
-  const authorIds = Array.from(new Set(posts.map(post => mongoose.Types.ObjectId(post.authorId))))
-  const zineIds =  Array.from(new Set(posts.map(post => mongoose.Types.ObjectId(post.zineId))))
-
-  const authors = await User.find({ _id: { $in: authorIds } }, { profileImageURL: 1 })
-  const zines = await Zine.find({ _id: { $in: zineIds } }, { iconImageURL: 1 })
-
-  ctx.body = posts.map(post => {
-    post = post.toJSON()
-
-    post.author = authors.find(author => author.id === post.authorId)
-    delete post.authorId
-
-    post.zine = zines.find(zine => zine.id === post.zineId)
-    delete post.zineId
-
-    return post
-  })
+  ctx.body = await Post.find(ctx.query)
 }
