@@ -5,6 +5,8 @@ const PostSchema = new mongoose.Schema({
   authorId: { type: String, required: true },
   zineId: { type: String, required: true },
   body: { type: mongoose.Schema.Types.Mixed, required: true }
+}, {
+  minimize:false
 })
 
 PostSchema.methods.toJSON = function() {
