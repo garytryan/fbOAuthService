@@ -25,6 +25,6 @@ export default {
 
   logout: async ctx => {
     logoutFromZine(ctx)
-    ctx.status = 200
+    ctx.body = ctx.loggedInUser
   }
 }
