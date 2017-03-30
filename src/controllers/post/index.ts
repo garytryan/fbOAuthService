@@ -6,8 +6,8 @@ import { pick } from 'lodash'
 
 export const post = async ctx => {
   if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
-  ctx.checkBody('type').notBlank()
-  ctx.checkBody('contentURL').notBlank()
+  ctx.checkBody('title').notBlank()
+  ctx.checkBody('body').notBlank()
   ctx.checkBody('zineId').notBlank()
 
   if(ctx.errors) {
