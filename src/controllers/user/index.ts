@@ -1,7 +1,11 @@
 import User from '../../models/User'
+import * as MongoQS from 'mongo-querystring'
+
+const qs = new MongoQS()
+
 
 export const get = async ctx => {
-  ctx.body = await User.find()
+  ctx.body = await User.find(qs.parse(ctx.query))
 }
 
 export const me = async ctx => {
