@@ -26,16 +26,5 @@ export const post = async ctx => {
 }
 
 export const get = async ctx => {
-  ctx.checkQuery('zineId').notBlank()
-
-  if(ctx.errors) {
-    ctx.throw(
-      400,
-      'incorrectly formatted request',
-      { errors: ctx.errors }
-    )
-    return
-  }
-
   ctx.body = await Post.find(ctx.query)
 }
