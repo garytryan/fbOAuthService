@@ -2,10 +2,11 @@ const mongoose = require('mongoose')
 
 const PostSchema = new mongoose.Schema({
   title: { type: String },
-  description: { type: String },
   authorId: { type: String, required: true },
   zineId: { type: String, required: true },
-  contentURL: { type: String, required: true }
+  body: { type: mongoose.Schema.Types.Mixed, required: true }
+}, {
+  minimize:false
 })
 
 PostSchema.methods.toJSON = function() {

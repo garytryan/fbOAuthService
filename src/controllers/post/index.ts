@@ -6,8 +6,8 @@ import { pick } from 'lodash'
 
 export const post = async ctx => {
   if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
-  ctx.checkBody('type').notBlank()
-  ctx.checkBody('contentURL').notBlank()
+  ctx.checkBody('title').notBlank()
+  ctx.checkBody('body').notBlank()
   ctx.checkBody('zineId').notBlank()
 
   if(ctx.errors) {
@@ -26,16 +26,5 @@ export const post = async ctx => {
 }
 
 export const get = async ctx => {
-  ctx.checkQuery('zineId').notBlank()
-
-  if(ctx.errors) {
-    ctx.throw(
-      400,
-      'incorrectly formatted request',
-      { errors: ctx.errors }
-    )
-    return
-  }
-
   ctx.body = await Post.find(ctx.query)
 }
