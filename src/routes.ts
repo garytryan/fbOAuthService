@@ -28,3 +28,4 @@ export const configRoutes = router =>
     // POST
     .post('/post', post.post)
     .get('/posts', post.get)
+    .del('/post', post.del)
