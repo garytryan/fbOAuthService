@@ -4,6 +4,10 @@ import User from '../../models/User'
 import Zine from '../../models/Zine'
 import { pick, assign } from 'lodash'
 
+export const get = async ctx => {
+  ctx.body = await Post.find(ctx.query)
+}
+
 export const post = async ctx => {
   if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
   ctx.checkBody('title').notBlank()
@@ -25,8 +29,30 @@ export const post = async ctx => {
   ctx.body = await Post(ctx.request.body).save()
 }
 
-export const get = async ctx => {
-  ctx.body = await Post.find(ctx.query)
+export const put = async ctx => {
+  if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
+  ctx.checkBody('title').notBlank()
+  ctx.checkBody('body').notBlank()
+  ctx.checkBody('zineId').notBlank()
+
+  if(ctx.errors) {
+    ctx.throw(
+      400,
+      'incorrectly formatted request',
+      { errors: ctx.errors }
+    )
+    return
+  }
+
+  ctx.request.body.authorId = ctx.loggedInUser.id
+
+  ctx.body = ctx.request.body.id ?
+    await Post.findOneAndUpdate(
+      { _id: ctx.request.body.id },
+      ctx.request.body,
+      { new: true }
+    ) :
+    await Post(ctx.request.body).save()
 }
 
 export const del = async ctx => {
