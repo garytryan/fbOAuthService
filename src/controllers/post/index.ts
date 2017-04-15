@@ -4,8 +4,12 @@ import User from '../../models/User'
 import Zine from '../../models/Zine'
 import { pick, assign } from 'lodash'
 
-export const get = async ctx => {
+export const getPosts = async ctx => {
   ctx.body = await Post.find(ctx.query)
+}
+
+export const get = async ctx => {
+  ctx.body = await Post.findOne(ctx.query)
 }
 
 export const post = async ctx => {
