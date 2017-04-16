@@ -5,6 +5,8 @@ const PostSchema = new mongoose.Schema({
   authorId: { type: String, required: true },
   zineId: { type: String, required: true },
   body: { type: mongoose.Schema.Types.Mixed, required: true },
+  description: { type: String },
+  coverImageUrl: { type: String },
   deleted: { type: Boolean, default: false }
 }, {
   minimize:false
