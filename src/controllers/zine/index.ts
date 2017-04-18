@@ -1,4 +1,7 @@
 import Zine from '../../models/Zine'
+import * as MongoQS from 'mongo-querystring'
+
+const qs = new MongoQS()
 
 export const me = async ctx => {
   if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
@@ -70,11 +73,11 @@ export const post = async ctx => {
 }
 
 export const getZine = async ctx => {
-  ctx.body = await Zine.findOne(ctx.query)
+  ctx.body = await Zine.findOne(qs.parse(ctx.query))
 }
 
 export const getZines = async ctx => {
-  ctx.body = await Zine.find(ctx.query)
+  ctx.body = await Zine.find(qs.parse(ctx.query))
 }
 
 export const del = async ctx => {
