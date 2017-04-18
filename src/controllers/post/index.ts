@@ -5,7 +5,12 @@ import Zine from '../../models/Zine'
 import { pick, assign } from 'lodash'
 
 export const getPosts = async ctx => {
-  ctx.body = await Post.find(ctx.query)
+  const options = {
+    sort: { '_id' : -1 },
+    limit: 100
+  }
+
+  ctx.body = await Post.find(ctx.query, {}, options)
 }
 
 export const get = async ctx => {
