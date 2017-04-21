@@ -48,7 +48,12 @@ export default {
   },
 
   twitter: async ctx => {
-    const oauthToken = await request(`https://api.twitter.com/oauth/request_token?oauth_callback=${ctx.request.origin}/auth/twitter/callback`, { method: 'POST' })
+    const oauthToken = await request(`https://api.twitter.com/oauth/request_token`, {
+      method: 'POST',
+      body: JSON.stringify({
+        oauth_callback: `${ctx.request.origin}/auth/twitter/callback`
+      })
+    })
     console.log('oauthToken', oauthToken)
     ctx.body = 'yeah'
   },
