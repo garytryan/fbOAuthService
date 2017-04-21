@@ -56,7 +56,7 @@ export default {
 
   twitter: async ctx => {
     const oauthRequestToken = await new Promise(resolve => {
-      twitter.get('/oauth/request_token', { callback }, relove)
+      twitter.post('/oauth/request_token', { callback }, relove)
     })
 
     console.log('oauthRequestToken',oauthRequestToken)
