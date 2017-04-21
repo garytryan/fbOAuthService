@@ -1,8 +1,15 @@
-import * as request from 'request-promise-native'
+import * as Twitter from 'twitter'
 import signupWithEmail from './signupWithEmail'
 import signupWithFacebook from './signupWithFacebook'
 import signinWithFacebook from './signinWithFacebook'
 import { logout as logoutFromZine } from '../../utils/identity'
+
+const twitter = new Twitter({
+  consumer_key: env.process.TWITTER_CONSUMER_KEY,
+  consumer_secret: env.process.TWITTER_CONSUMER_SECRET,
+  access_token_key: env.process.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: env.process.TWITTER_TOKEN_SECRET
+});
 
 export default {
   signin: async ctx => {
@@ -48,14 +55,13 @@ export default {
   },
 
   twitter: async ctx => {
-    const oauthToken = await request(`https://api.twitter.com/oauth/request_token`, {
-      method: 'POST',
-      body: JSON.stringify({
-        oauth_callback: `${ctx.request.origin}/auth/twitter/callback`
-      })
+    const oauthRequestToken = await new Promise(resolve => {
+      twitter.get('/oauth/request_token', { callback }, relove)
     })
-    console.log('oauthToken', oauthToken)
-    ctx.body = 'yeah'
+
+    console.log('oauthRequestToken',oauthRequestToken)
+
+    ctx.body = oauthRequestToken
   },
 
   twitterCallback: async ctx => {

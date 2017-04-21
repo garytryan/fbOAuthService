@@ -49,6 +49,7 @@
     "mongoose": "^4.8.5",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3",
+    "twitter": "^1.7.0",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
