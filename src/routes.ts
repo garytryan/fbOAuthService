@@ -9,6 +9,8 @@ export const configRoutes = router =>
     // AUTH
     .get('/auth/logout', auth.logout)
     .post('/auth/signup', auth.signup)
+    .post('/auth/signin', auth.signin)
+    .get('/auth/twitter', auth.twitter)
 
 
     // USER
