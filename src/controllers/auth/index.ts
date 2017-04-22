@@ -59,7 +59,7 @@ export default {
     const oauthRequestTokenResponse = await request({
       url: 'https://api.twitter.com/oauth/request_token',
       oauth: {
-        callback: encodeURI('http://api.twitter.com/oauth/request_token'),
+        callback: encodeURI(`${ctx.origin}/auth/twitter/callback`),
         consumer_key: process.env.TWITTER_CONSUMER_KEY,
         consumer_secret: process.env.TWITTER_CONSUMER_SECRET
       }
@@ -67,9 +67,19 @@ export default {
 
     const accessToken = oauthRequestTokenResponse.match(/oauth_token=[a-z|A-Z|0-9]+/)[0].replace('oauth_token=', '')
 
-    ctx.response.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${accessToken}`)
+    ctx.response.redirect(`https://www.google.com`)
+    // ctx.response.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${accessToken}`)
   },
 
   twitterCallback: async ctx => {
+    console.log('twitterCallback', ctx.request.params)
+    // const oauthRequestAccessToken = await request({
+    //   url: 'https://api.twitter.com/oauth/request_token',
+    //   oauth: {
+    //     callback: encodeURI(`${ctx.origin}/auth/twitter/callback`),
+    //     consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    //     consumer_secret: process.env.TWITTER_CONSUMER_SECRET
+    //   }
+    // })
   }
 }
