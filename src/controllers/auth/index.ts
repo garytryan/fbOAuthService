@@ -65,10 +65,9 @@ export default {
       }
     })
 
-    console.log('oauthRequestTokenResponse', typeof oauthRequestTokenResponse)
+    const accessToken = /oauth_token=[a-z|A-Z|0-9])+/.match(oauthRequestTokenResponse)[0].replace('oauth_token=', '')
 
-
-    ctx.response.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${oauthRequestTokenResponse.access_token}`)
+    ctx.response.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${access_token}`)
   },
 
   twitterCallback: async ctx => {
