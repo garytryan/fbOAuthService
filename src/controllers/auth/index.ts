@@ -56,7 +56,7 @@ export default {
   },
 
   twitter: async ctx => {
-    const oauthRequestToken = request({
+    const oauthRequestTokenResponse = await request({
       url: 'https://api.twitter.com/oauth/request_token',
       oauth: {
         callback: encodeURI('http://api.twitter.com/oauth/request_token'),
@@ -67,7 +67,7 @@ export default {
 
     console.log('oauthRequestToken',oauthRequestToken)
 
-    ctx.body = oauthRequestToken
+    ctx.response.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${oauthRequestTokenResponse.access_token}`)
   },
 
   twitterCallback: async ctx => {
