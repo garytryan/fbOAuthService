@@ -5,10 +5,10 @@ import signinWithFacebook from './signinWithFacebook'
 import { logout as logoutFromZine } from '../../utils/identity'
 
 const twitter = new Twitter({
-  consumer_key: env.process.TWITTER_CONSUMER_KEY,
-  consumer_secret: env.process.TWITTER_CONSUMER_SECRET,
-  access_token_key: env.process.TWITTER_ACCESS_TOKEN_KEY,
-  access_token_secret: env.process.TWITTER_TOKEN_SECRET
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.TWITTER_TOKEN_SECRET
 });
 
 export default {
