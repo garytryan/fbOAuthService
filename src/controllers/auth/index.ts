@@ -1,4 +1,5 @@
 import * as Twitter from 'twitter'
+import * as request from 'request-promise-native'
 import signupWithEmail from './signupWithEmail'
 import signupWithFacebook from './signupWithFacebook'
 import signinWithFacebook from './signinWithFacebook'
@@ -55,8 +56,13 @@ export default {
   },
 
   twitter: async ctx => {
-    const oauthRequestToken = await new Promise(resolve => {
-      twitter.post('oauth/request_token', { oauth_callback: encodeURI('http://www.zine.media') }, resolve)
+    const oauthRequestToken = request({
+      url: 'https://api.twitter.com/oauth/request_token',
+      oauth: {
+        callback: encodeURI('http://api.twitter.com/oauth/request_token'),
+        consumer_key: process.env.TWITTER_CONSUMER_KEY,
+        consumer_secret: process.env.TWITTER_CONSUMER_SECRET
+      }
     })
 
     console.log('oauthRequestToken',oauthRequestToken)
