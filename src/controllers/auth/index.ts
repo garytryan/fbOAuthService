@@ -65,7 +65,6 @@ export default {
       }
     })
 
-    console.log('oauthRequestToken',oauthRequestToken)
 
     ctx.response.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${oauthRequestTokenResponse.access_token}`)
   },
