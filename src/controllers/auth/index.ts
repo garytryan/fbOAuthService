@@ -67,7 +67,9 @@ export default {
 
     const accessToken = oauthRequestTokenResponse.match(/oauth_token=[a-z|A-Z|0-9]+/)[0].replace('oauth_token=', '')
 
-    ctx.body = `https://api.twitter.com/oauth/authenticate?oauth_token=${accessToken}`
+    ctx.body = {
+      url: `https://api.twitter.com/oauth/authenticate?oauth_token=${accessToken}`
+    }
   },
 
   twitterCallback: async ctx => {
