@@ -47,6 +47,7 @@ export const signIn = async ctx => {
 
 export const callback = async ctx => {
   const requestTokenSecret = ctx.session[`oauthRequestToken::${ctx.query.oauth_token}`]
+  ctx.session[`oauthRequestToken::${ctx.query.oauth_token}`] = null
 
   const accessTokenResponse = await request({
     url: 'https://api.twitter.com/oauth/access_token',
