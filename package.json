@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@types/node": "^7.0.5",
+    "bcrypt": "^1.0.2",
     "dotenv": "^4.0.0",
     "fb": "^1.1.1",
     "koa": "^2.0.1",

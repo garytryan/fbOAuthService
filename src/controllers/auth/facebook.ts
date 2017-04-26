@@ -8,7 +8,6 @@ import { login } from '../../utils/identity'
 export const signIn = async ctx => {
   ctx.checkBody('facebookUserAccessToken').notBlank()
   ctx.checkBody('facebookUserId').notBlank()
-  const user = await ctx.getUser()
 
   if(ctx.errors) {
     ctx.throw(
@@ -18,6 +17,8 @@ export const signIn = async ctx => {
     )
     return
   }
+
+  const user = await ctx.getUser()
 
   if(user.name) {
     return ctx.body = user

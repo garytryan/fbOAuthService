@@ -9,7 +9,12 @@ export const get = async ctx => {
 }
 
 export const me = async ctx => {
- ctx.body = await ctx.getUser()
+  let user = await ctx.getUser()
+
+  user = user.toJSON()
+  user.loggedIn = ctx.session.loggedInUserId === user.id
+
+  ctx.body = user
 }
 
 export const post = async ctx => {
