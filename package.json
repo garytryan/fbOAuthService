@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@types/node": "^7.0.5",
+    "dotenv": "^4.0.0",
     "fb": "^1.1.1",
     "koa": "^2.0.1",
     "koa-accesslog": "0.0.2",
@@ -47,9 +48,9 @@
     "mongo-querystring": "^4.1.0",
     "mongodb": "^2.2.24",
     "mongoose": "^4.8.5",
+    "querystring": "^0.2.0",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3",
-    "twitter": "^1.7.0",
     "typescript": "^2.2.1"
   },
   "devDependencies": {

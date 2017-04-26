@@ -8,9 +8,13 @@ export const configRoutes = router =>
 
     // AUTH
     .get('/auth/logout', auth.logout)
-    .post('/auth/signup', auth.signup)
-    .post('/auth/signin', auth.signin)
-    .get('/auth/twitter', auth.twitter)
+    .post('/auth/signup/twitter', auth.twitter.signUp)
+    .post('/auth/signup/facebook', auth.facebook.signUp)
+    .post('/auth/signup/email', auth.email.signUp)
+    .post('/auth/signin/twitter', auth.twitter.signIn)
+    .post('/auth/signin/facebook', auth.facebook.signIn)
+    .post('/auth/signin/email', auth.email.signIn)
+    .get('/auth/twitter/callback', auth.twitter.callback)
 
 
     // USER

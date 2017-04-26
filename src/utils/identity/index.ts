@@ -1,16 +1,18 @@
 import User from '../../models/User'
 
+const getUser = async ctx =>
+  await User.findById(ctx.session.loggedInUserId || ctx.session.loggedOutUserId)
+
 export default () => async (ctx, next) => {
-  if(ctx.session.loggedInUserId) {
-    ctx.loggedInUser = await User.findById(ctx.session.loggedInUserId)
-  }
-  else if(ctx.session.loggedOutUserId) {
-    ctx.loggedOutUser = await User.findById(ctx.session.loggedOutUserId)
-  }
-  else {
+  const user = await getUser(ctx)
+
+  if(!user) {
     const newUser = await User().save()
+
     ctx.session.loggedOutUserId = newUser._id
   }
+
+  ctx.getUser = async () => await getUser(ctx)
 
   await next()
 }
@@ -20,6 +22,5 @@ export const logout = async ctx => {
 }
 
 export const login = (ctx, user) => {
-  ctx.loggedInUser = user
   ctx.session.loggedInUserId = user._id
 }

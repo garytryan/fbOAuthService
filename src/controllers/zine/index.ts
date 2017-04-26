@@ -4,18 +4,21 @@ import * as MongoQS from 'mongo-querystring'
 const qs = new MongoQS()
 
 export const me = async ctx => {
-  if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
+  const user = await ctx.getUser()
+  if(!user.name) return ctx.throw(401, 'unauthorized')
 
-  ctx.query.ownerId = ctx.loggedInUser._id
+  ctx.query.ownerId = user._id
 
   ctx.body = await Zine.find(ctx.query)
 }
 
 export const post = async ctx => {
   ctx.checkBody('name').notBlank()
-  if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
+  const user = await ctx.getUser();
 
-  ctx.request.body.ownerId = ctx.loggedInUser._id
+  if(!user.name) return ctx.throw(401, 'unauthorized')
+
+  ctx.request.body.ownerId = user._id
 
   const existingZineByName = await Zine.findOne({ name: ctx.request.body.name })
 
@@ -28,10 +31,10 @@ export const post = async ctx => {
       // and the user owns it
       if(
         existingZineByName.id === ctx.request.body.id &&
-        existingZineByName.ownerId === ctx.loggedInUser.id
+        existingZineByName.ownerId === user._id
       ) {
         return ctx.body = await Zine.findOneAndUpdate(
-          { _id: ctx.request.body.id, ownerId: ctx.loggedInUser._id },
+          { _id: ctx.request.body.id, ownerId: user._id },
           ctx.request.body,
           { new: true })
       } else {
@@ -43,7 +46,7 @@ export const post = async ctx => {
     else {
       // update the zine
       return ctx.body = await Zine.findOneAndUpdate(
-        { _id: ctx.request.body.id, ownerId: ctx.loggedInUser._id },
+        { _id: ctx.request.body.id, ownerId: user._id },
         ctx.request.body,
         { new: true })
     }
@@ -55,7 +58,7 @@ export const post = async ctx => {
     if(existingZineByName) ctx.throw(403, 'a zine by this name already exists')
 
     const userZineCount = await Zine.count({
-      ownerId: ctx.loggedInUser._id,
+      ownerId: user._id,
       deleted: false
     })
 
@@ -65,7 +68,7 @@ export const post = async ctx => {
 
 
     ctx.body = await Zine.findOneAndUpdate(
-      { name: ctx.request.body.name, ownerId: ctx.loggedInUser._id },
+      { name: ctx.request.body.name, ownerId: user._id },
       ctx.request.body,
       { new: true, upsert: true })
   }
@@ -82,10 +85,12 @@ export const getZines = async ctx => {
 
 export const del = async ctx => {
   ctx.checkQuery('id').notBlank()
-  if(!ctx.loggedInUser) return ctx.throw(401, 'unauthorized')
+  const user = await ctx.getUser();
+
+  if(!user.name) return ctx.throw(401, 'unauthorized')
 
   return ctx.body = await Zine.findOneAndUpdate(
-    { _id: ctx.query.id, ownerId: ctx.loggedInUser._id },
+    { _id: ctx.query.id, ownerId: user._id },
     { deleted: true },
     { new: true })
 }
