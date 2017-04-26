@@ -20,8 +20,8 @@ export const signIn = async ctx => {
 
   const user = await ctx.getUser()
 
-  if(user.name) {
-    return ctx.body = user
+  if(user.isLoggedIn(ctx)) {
+    return ctx.body = user.serialize(ctx)
   }
 
   const accessTokenResponse: any = await facebook.api('oauth/access_token', {
@@ -48,11 +48,11 @@ export const signIn = async ctx => {
   })
 
   if(existingFacebookAccount) {
-    const existingUser = await User.findById(existingFacebookAccount.userId)
+    let existingUser = await User.findById(existingFacebookAccount.userId)
 
     login(ctx, existingUser)
 
-    return ctx.body = user
+    return ctx.body = existingUser.serialize(ctx)
   } else {
     return ctx.throw(401, 'no such account registered')
   }
@@ -72,8 +72,8 @@ export const signUp = async ctx => {
     return
   }
 
-  if(user.name) {
-    return ctx.body = user
+  if(user.isLoggedIn(ctx)) {
+    return ctx.body = user.serialize(ctx)
   }
 
   const existingFacebookAccount = await FacebookAccount.findOne({
@@ -85,7 +85,7 @@ export const signUp = async ctx => {
 
     login(ctx, existingUser)
 
-    return ctx.body = existingUser
+    return ctx.body = existingUser.serialize(ctx)
   }
 
   const accessTokenResponse: any = await facebook.api('oauth/access_token', {
@@ -126,5 +126,5 @@ export const signUp = async ctx => {
 
   login(ctx, newUser)
 
-  ctx.body = newUser
+  ctx.body = newUser.serialize(ctx)
 }

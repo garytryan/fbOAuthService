@@ -18,7 +18,16 @@ export const signUp = async ctx => {
   const existingUser = await User.findOne({ email: ctx.request.body.email })
 
   if(existingUser) {
-    // if email matches password login
+    const passwordDoesMatch = await existingUser.comparePasswords(ctx.request.body.password)
+
+    if(passwordDoesMatch) {
+      login(ctx, existingUser)
+
+      ctx.body = existingUser.serialize(ctx)
+    }
+    else {
+      ctx.throw(401, 'password does not match email')
+    }
   }
   else {
     let user = await User({
@@ -28,9 +37,6 @@ export const signUp = async ctx => {
 
     login(ctx, user)
 
-    user = user.toJSON()
-    user.loggedIn = true
-
-    ctx.body = user
+    ctx.body = user.serialize(ctx)
   }
 }
